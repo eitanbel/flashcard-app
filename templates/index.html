@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flashcards AI</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+
+  <!-- ── UPLOAD SCREEN ── -->
+  <div id="screen-upload" class="screen active">
+    <div class="hero">
+      <div class="logo">⚡</div>
+      <h1>Flashcards <span class="accent">AI</span></h1>
+      <p class="subtitle">Uploade un PDF et révise avec des flashcards générées par IA</p>
+
+      <div id="drop-zone" class="drop-zone">
+        <div class="drop-icon">📄</div>
+        <p class="drop-title">Glisse ton PDF ici</p>
+        <p class="drop-hint">ou clique pour sélectionner</p>
+        <input type="file" id="file-input" accept=".pdf" hidden />
+      </div>
+
+      <p id="upload-error" class="error-msg hidden"></p>
+
+      <button id="btn-generate" class="btn btn-primary btn-large hidden">
+        Générer les flashcards
+      </button>
+    </div>
+  </div>
+
+  <!-- ── LOADING SCREEN ── -->
+  <div id="screen-loading" class="screen">
+    <div class="loading-container">
+      <div class="spinner"></div>
+      <h2>Génération en cours…</h2>
+      <p>Claude analyse ton document et crée les flashcards</p>
+    </div>
+  </div>
+
+  <!-- ── REVIEW SCREEN ── -->
+  <div id="screen-review" class="screen">
+    <header class="review-header">
+      <div class="header-left">
+        <button id="btn-restart" class="btn btn-ghost">← Nouveau PDF</button>
+      </div>
+      <div class="progress-wrap">
+        <div class="progress-bar"><div id="progress-fill" class="progress-fill"></div></div>
+        <span id="progress-label" class="progress-label">0 / 0</span>
+      </div>
+      <div class="score-display">
+        <span class="score-item correct">✓ <span id="score-correct">0</span></span>
+        <span class="score-item incorrect">✗ <span id="score-incorrect">0</span></span>
+      </div>
+    </header>
+
+    <main class="review-main">
+      <p class="flip-hint">Clique sur la carte pour révéler la réponse</p>
+
+      <div id="card-container" class="card-container">
+        <div id="flashcard" class="flashcard">
+          <div class="card-inner">
+            <div class="card-front">
+              <div class="card-label">Question</div>
+              <p id="card-question" class="card-text"></p>
+            </div>
+            <div class="card-back">
+              <div class="card-label">Réponse</div>
+              <p id="card-answer" class="card-text"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="action-buttons" class="action-buttons hidden">
+        <button id="btn-incorrect" class="btn btn-incorrect">✗ À revoir</button>
+        <button id="btn-correct" class="btn btn-correct">✓ Je savais</button>
+      </div>
+
+      <div class="nav-buttons">
+        <button id="btn-prev" class="btn btn-ghost" disabled>← Précédente</button>
+        <button id="btn-next" class="btn btn-ghost" disabled>Suivante →</button>
+      </div>
+    </main>
+  </div>
+
+  <!-- ── RESULTS SCREEN ── -->
+  <div id="screen-results" class="screen">
+    <div class="results-container">
+      <div id="results-emoji" class="results-emoji">🎉</div>
+      <h2 id="results-title">Session terminée !</h2>
+      <p id="results-subtitle" class="results-subtitle"></p>
+
+      <div class="results-stats">
+        <div class="stat-card stat-correct">
+          <span class="stat-number" id="final-correct">0</span>
+          <span class="stat-label">Correctes</span>
+        </div>
+        <div class="stat-card stat-incorrect">
+          <span class="stat-number" id="final-incorrect">0</span>
+          <span class="stat-label">À revoir</span>
+        </div>
+        <div class="stat-card stat-total">
+          <span class="stat-number" id="final-total">0</span>
+          <span class="stat-label">Total</span>
+        </div>
+      </div>
+
+      <div class="results-actions">
+        <button id="btn-retry-wrong" class="btn btn-primary">Revoir les erreurs</button>
+        <button id="btn-restart-all" class="btn btn-secondary">Nouveau PDF</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
